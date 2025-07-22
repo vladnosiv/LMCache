@@ -38,6 +38,8 @@ logger = init_logger(__name__)
 class LMCacheLookupClient(LookupClientInterface):
     """ZMQ-based lookup client that communicates with a lookup server."""
 
+    supports_producer_reuse: bool = True
+
     def __init__(self, vllm_config: "VllmConfig"):
         self.encoder = MsgpackEncoder()
         self.ctx = zmq.Context()  # type: ignore[attr-defined]

@@ -98,14 +98,14 @@ def create_config(role: str, host: str, port: int) -> LMCacheEngineConfig:
     """Create a configuration for the LMCacheEngine with Nixl backend."""
     config = LMCacheEngineConfig.from_defaults(
         chunk_size=256,
-        local_cpu=False,  # Nixl requires local_cpu=False
-        max_local_cpu_size=0,  # Nixl requires max_local_cpu_size=0
-        local_disk=None,  # Nixl requires local_disk=None
-        max_local_disk_size=0,  # Nixl requires max_local_disk_size=0
-        remote_url=None,  # Nixl requires remote_url=None
-        remote_serde=None,  # Nixl requires remote_serde=None
+        local_cpu=role == "sender",  # Nixl receiver requires local_cpu=False
+        max_local_cpu_size=1 if role == "sender" else 0,  # Nixl receiver requires max_local_cpu_size=0
+        local_disk=None,
+        max_local_disk_size=0,
+        remote_url=None,
+        remote_serde=None,
         save_decode_cache=False,  # Nixl requires save_decode_cache=False
-        enable_p2p=False,  # Nixl requires enable_p2p=False
+        enable_p2p=False,
         enable_nixl=True,  # Enable Nixl
         nixl_role=role,  # 'sender' or 'receiver'
         nixl_receiver_host=host,
