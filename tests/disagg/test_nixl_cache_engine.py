@@ -99,7 +99,8 @@ def create_config(role: str, host: str, port: int) -> LMCacheEngineConfig:
     config = LMCacheEngineConfig.from_defaults(
         chunk_size=256,
         local_cpu=role == "sender",  # Nixl receiver requires local_cpu=False
-        max_local_cpu_size=1 if role == "sender" else 0,  # Nixl receiver requires max_local_cpu_size=0
+        # Nixl receiver requires max_local_cpu_size=0
+        max_local_cpu_size=1 if role == "sender" else 0,
         local_disk=None,
         max_local_disk_size=0,
         remote_url=None,
